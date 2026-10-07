@@ -57,7 +57,9 @@ export interface DeviceState {
       title?: string;
       artist?: string;
       app?: string;
+      kind?: 'music' | 'video';
     };
+    video?: { title?: string; artist?: string; app?: string; kind?: 'video' };
   };
 }
 

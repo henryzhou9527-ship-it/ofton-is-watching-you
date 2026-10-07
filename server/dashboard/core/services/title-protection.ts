@@ -1,7 +1,7 @@
 /** Preserve ordinary features while keeping file/window-derived document details private. */
 import { resolveAppMeta } from "./app-mapper";
-const FILE_OR_PATH = /(?:file:\/\/|[a-z]:[\\/]|\\\\[^\\]+\\|(?:^|\s)\/[\w.-]+\/|\.(?:pdf|docx?|xlsx?|pptx?|odt|ods|odp|txt|md|csv|json|xml|ya?ml|py|tsx?|jsx?|cpp|h|rs|go|java|cs|sql|psd|ai|blend|dwg|zip|7z|rar|mp[34]|mkv|avi|flac|wav)(?:\b|$))/i;
-const MUSIC_SOURCES = new Set(["spotify", "qq音乐", "网易云音乐", "apple music", "youtube music", "酷狗音乐", "酷我音乐", "amazon music"]);
+import { resolveMediaSource } from "../../../../shared/media-sources";
+import { PRIVATE_FILE_TITLE as FILE_OR_PATH } from "../../../../shared/media-title";
 
 export function protectDetails(_windowDerivedDetail: unknown): string {
   // Browser document captions and extensionless filenames cannot be separated reliably.
@@ -16,19 +16,22 @@ export function protectExtra(raw: unknown): Record<string, unknown> {
   if (typeof input.battery_percent === "number" && Number.isFinite(input.battery_percent))
     extra.battery_percent = Math.max(0, Math.min(100, Math.round(input.battery_percent)));
   if (typeof input.battery_charging === "boolean") extra.battery_charging = input.battery_charging;
-  if (input.music && typeof input.music === "object" && !Array.isArray(input.music)) {
-    const source = input.music as Record<string, unknown>;
+  for (const channel of ['music', 'video']) {
+    if (!input[channel] || typeof input[channel] !== 'object' || Array.isArray(input[channel])) continue;
+    const source = input[channel] as Record<string, unknown>;
     const music: Record<string, string> = {};
+    const mediaSource = resolveMediaSource(source.app);
     if (typeof source.app === "string" && !FILE_OR_PATH.test(source.app)) music.app = source.app.slice(0, 64);
-    const trustedMetadata = MUSIC_SOURCES.has((music.app || "").toLowerCase());
-    if (trustedMetadata) {
+    if (mediaSource) {
+      music.app = mediaSource.name;
+      music.kind = mediaSource.kind;
       for (const key of ["title", "artist"]) {
         const value = source[key];
         if (typeof value === "string" && !FILE_OR_PATH.test(value)) music[key] = value.slice(0, 256);
       }
     }
-    // Generic/local players often report a filename as their song title; preserve playback/app.
-    if (Object.keys(music).length) extra.music = music;
+    // Android sends package IDs. Normalize approved music/video sessions without exposing file titles.
+    if (Object.keys(music).length) extra[channel] = music;
   }
   return extra;
 }

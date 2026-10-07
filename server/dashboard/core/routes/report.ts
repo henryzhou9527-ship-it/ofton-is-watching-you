@@ -6,6 +6,7 @@ import { resolveAppMeta, resolveHostAppLabel } from "../services/app-mapper";
 import { isNSFW } from "../services/nsfw-filter";
 import { isSecretApp, processDisplayTitle, SECRET_APP_NAME } from "../services/privacy-tiers";
 import { canReportActivity, insertActivity, upsertDeviceState, hmacTitle } from "../db";
+import { mediaFromWindow } from "../../../../shared/media-title";
 
 const MAX_TITLE_LENGTH = 256;
 
@@ -96,9 +97,8 @@ export async function handleReport(req: Request): Promise<Response> {
   const titleHash = hmacTitle(windowTitle.toLowerCase().trim());
 
   // Parse extra (battery, etc.) — whitelist fields first, then serialize
-  let extraJson = "{}";
+  const extra: Record<string, unknown> = {};
   if (body.extra && typeof body.extra === "object" && !Array.isArray(body.extra)) {
-    const extra: Record<string, unknown> = {};
     if (typeof body.extra.battery_percent === "number" && Number.isFinite(body.extra.battery_percent)) {
       extra.battery_percent = Math.max(0, Math.min(100, Math.round(body.extra.battery_percent)));
     }
@@ -115,8 +115,15 @@ export async function handleReport(req: Request): Promise<Response> {
         extra.music = music;
       }
     }
-    extraJson = JSON.stringify(protectExtra(extra));
+    if (body.extra.video && typeof body.extra.video === 'object' && !Array.isArray(body.extra.video)) extra.video = body.extra.video;
   }
+  const captionMedia = mediaFromWindow(appId, appName, windowTitle);
+  const protectedExtra = protectExtra(extra);
+  if (captionMedia) {
+    const channel = captionMedia.kind === 'video' ? 'video' : 'music';
+    if (!(protectedExtra[channel] as { title?: string } | undefined)?.title) protectedExtra[channel] = captionMedia;
+  }
+  const extraJson = JSON.stringify(protectedExtra);
 
   // Insert activity — window_title is NEVER stored (privacy: empty string)
   try {

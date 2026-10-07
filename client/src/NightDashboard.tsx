@@ -11,6 +11,8 @@ import { DeviceIcon } from '@/components/ActivityViews';
 import TodayScreen from '@/components/TodayScreen';
 import { useSceneNavigation } from '@/hooks/useSceneNavigation';
 import { usePageGestures } from '@/hooks/usePageGestures';
+import NowPlaying from '@/components/NowPlaying';
+import { getNowPlaying } from '@/lib/now-playing';
 
 function since(time: string | undefined, now: number) {
   if (!time || !Number.isFinite(Date.parse(time))) return '尚无上报';
@@ -39,6 +41,7 @@ export default function NightDashboard() {
     query.addEventListener('change', listener); return () => query.removeEventListener('change', listener);
   }, []);
   const devices = useMemo(() => current?.devices ?? [], [current?.devices]);
+  const playing = useMemo(() => error ? [] : getNowPlaying(devices, now), [devices, now, error]);
   const active = devices.find(device => device.device_id === deviceId) ?? [...devices].sort((a, b) => Number(online(b, now)) - Number(online(a, now)) || Date.parse(b.last_seen_at) - Date.parse(a.last_seen_at))[0];
   const connected = !error && online(active, now);
   const idle = active && isIdle(active);
@@ -61,11 +64,12 @@ export default function NightDashboard() {
     </header>
     <main className="scene-deck" data-phase={phase}>
       <div id="scene-now" className="scene-panel now-scene" role="tabpanel" aria-labelledby="scene-tab-now" tabIndex={-1} data-active={scene === 'now'} aria-hidden={scene !== 'now'} inert={scene !== 'now'}>
-      <section className="night-hero" id="now" aria-labelledby="hero-title">
+      <section className={`night-hero ${playing.length ? 'has-playback' : ''}`} id="now" aria-labelledby="hero-title">
         <div className="hero-grid" aria-hidden="true" /><div className="hero-glow" aria-hidden="true" />
         <div className="hero-content"><div className="hero-copy"><h1 id="hero-title" className="watching-title" aria-label={SITE_NAME}>お布団巻き<button type="button" className="title-spark" data-egg-trigger="direct" aria-label="戳一下小星星">✳</button><span className="title-japanese">is watching you<span className="title-small-eye"><Eye size={32} /></span></span></h1>
-          <div className={`live-state ${connected ? 'is-live' : ''}`}><div className="live-state-top"><span>{nickname}</span></div><p className="live-status" aria-live="polite">{status}</p><div className="live-meta"><span><Radio size={13} />{connected && active ? active.app_name === 'idle' ? '设备在线' : active.app_name : `最后上报 ${since(active?.last_seen_at, now)}`}</span>{current && <span><Eye size={13} />{viewerCount} 人在看</span>}</div>{connected && active?.extra?.music?.title && <div className="music-line">♫ {active.extra.music.title}{active.extra.music.artist ? ` · ${active.extra.music.artist}` : ''}</div>}</div>
+          <div className={`live-state ${connected ? 'is-live' : ''}`}><div className="live-state-top"><span>{nickname}</span></div><p className="live-status" aria-live="polite">{status}</p><div className="live-meta"><span><Radio size={13} />{connected && active ? active.app_name === 'idle' ? '设备在线' : active.app_name : `最后上报 ${since(active?.last_seen_at, now)}`}</span>{current && <span><Eye size={13} />{viewerCount} 人在看</span>}</div></div>
           </div><NightPortrait effects={effects} /></div>
+        <NowPlaying items={playing} />
         <div className="device-rail" aria-label="设备状态">{devices.length === 0 ? <p className="device-empty">{loading ? '设备连接中' : '还没有设备上报'}</p> : devices.map(device => {
           const isConnected = !error && online(device, now); const power = device.extra?.battery_percent;
           return <button data-egg-trigger="chance" className={`device-row ${deviceId === device.device_id ? 'selected' : ''}`} key={device.device_id} onClick={() => setDeviceId(deviceId === device.device_id ? null : device.device_id)} type="button" aria-pressed={deviceId === device.device_id}><DeviceIcon platform={device.platform} /><span className="device-identity"><strong>{device.device_name}</strong><span>{error ? '连接中断' : isConnected ? device.status_text || (isIdle(device) ? '暂时离开了喵~' : `正在使用${device.app_name}喵~`) : `最后上报 ${since(device.last_seen_at, now)}`}</span></span>{typeof power === 'number' && <span className="device-power">{device.extra?.battery_charging ? <BatteryCharging size={16} /> : <Battery size={16} />}{power}%</span>}<span className={`device-state ${isConnected ? 'online' : ''}`}><i />{error ? '未知' : isConnected ? '在线' : '离线'}</span></button>;

@@ -23,9 +23,18 @@
 .scene-shell .hero-content { flex: 1; min-height: 0; gap: 30px; }
 .scene-shell .hero-copy { padding-block: 12px; }
 .scene-shell .portrait-scene { width: min(100%, calc(100dvh - 245px)); max-width: 535px; margin: auto; }
+.scene-shell .has-playback .portrait-scene { width: min(100%, max(140px, calc(100dvh - 390px))); }
 .scene-shell .device-rail { flex-shrink: 0; margin-top: 14px; border-bottom: 0; }
 .scene-shell .device-row { min-height: 86px; }
 .scene-shell .live-state { margin-top: 24px; }
+.now-playing { flex-shrink: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 26px; max-height: 155px; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 10px 0; border-top: 1px solid oklch(53% .035 276 / .45); font-family: var(--font-soft-copy); }
+.playing-item { display: flex; gap: 11px; align-items: flex-start; min-width: 0; }
+.playing-item > svg { margin-top: 4px; color: var(--n-blue); }
+.playing-copy { min-width: 0; flex: 1; }
+.playing-source { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: var(--n-blue); font-size: .875rem; line-height: 1.6; }
+.playing-source > span { color: oklch(77% .027 277); font-size: .8125rem; }
+.playing-title { font-size: 1.0625rem; line-height: 1.5; color: var(--n-paper); overflow-wrap: anywhere; }
+.playing-artist { display: block; font-size: .875rem; line-height: 1.5; color: oklch(80% .023 277); overflow-wrap: anywhere; }
 
 /* Statistics are separate views. Only a detail panel can overflow on short screens. */
 .scene-shell .today-scene { overflow: hidden; }
@@ -97,6 +106,9 @@
   .scene-shell .live-status { margin-top: 4px !important; }
   .scene-shell .live-meta { margin-top: 5px; }
   .scene-shell .portrait-scene { width: min(72vw, max(145px, calc(100dvh - 515px))); margin: 6px auto; flex-shrink: 0; }
+  .scene-shell .has-playback .portrait-scene { width: min(58vw, max(70px, calc(100dvh - 640px))); }
+  .now-playing { max-height: 140px; gap: 10px; padding: 8px 0; }
+  .playing-title { font-size: 1rem; }
   .scene-shell .device-rail { margin-top: 10px; }
   .scene-shell .device-row { min-height: 64px; padding-block: 9px !important; gap: 8px; }
   .scene-shell .device-identity { gap: 1px; }

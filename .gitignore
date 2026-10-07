@@ -68,3 +68,5 @@ pnpm-lock.yaml
 # Agent files
 .agent/
 .npm_cache
+__pycache__/
+*.py[cod]

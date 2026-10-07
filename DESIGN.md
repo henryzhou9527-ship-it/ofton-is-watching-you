@@ -42,6 +42,10 @@ Feature headings and labels stay short. Preserve original humorous activity desc
 
 Cover reference: DECO*27 official Monitoring video https://www.youtube.com/watch?v=kbNdx0yqbZE and https://otoiro.co.jp/topics/104605/ . The source cover is a design reference, not a bundled website asset. The replacement is generated character-theme artwork without lettering.
 
+## Playback
+
+Keep live playback separate from the foreground application. A compact row above the device rail lists each reporting device's song or video, source app and artist/creator. Normalize Android package IDs as well as desktop labels; classify music and video separately. Device selection does not hide another device's playback. Offline, stale or cleared metadata disappears. Browser video compatibility only extracts titles with an identified media-site suffix, while general page titles, document names and local file paths stay hidden. On small screens the artwork makes room for playback; exceptionally long playback lists scroll inside their own area. Never auto-play sound or video.
+
 ## Time calculation
 
 Daily total and hourly activity merge confirmed active intervals across the selected devices. Overlap counts once, idle is excluded, unknown gaps remain empty, and ongoing sessions stop at the last confirmed heartbeat. Per-app durations also merge simultaneous use of the same app across devices. Different apps retain their own observed durations; the app pie compares those app durations and is not an exclusive partition of the deduplicated daily total. Device ribbons preserve the original per-device events. Replay defaults to compact sessions and has a 细分记录 switch for the original fragments.

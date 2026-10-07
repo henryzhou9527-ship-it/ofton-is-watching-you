@@ -9,6 +9,8 @@
 - 整屏眨眼转场、滚轮翻页、十种 Q 版彩蛋，可关闭动态效果。
 - Android 配套 App，可设置网站昵称，按需同步 Health Connect 数据。
 
+播放信息会分别显示歌名、歌手或视频标题，并标注设备和来源。手机兼容系统媒体会话里的应用包名；电脑兼容原版客户端的播放器信息和已知视频站标题。普通网页、文档及本地文件名继续隐藏。具体支持方式见 [桌面播放信息适配](companions/windows/README.md)。
+
 **开始使用：[部署说明](deployment/README.md) · [Android 安装与配置](companions/android/README.md) · [下载版本](https://github.com/henryzhou9527-ship-it/ofton-is-watching-you/releases)**
 
 当前完整后端使用飞书妙搭的 NestJS 运行环境与 PostgreSQL。只预览前端可以在本机运行；连接自己的兼容后端后才能显示设备数据。GitHub 提供源码与安装包，不提供公共采集服务器。
