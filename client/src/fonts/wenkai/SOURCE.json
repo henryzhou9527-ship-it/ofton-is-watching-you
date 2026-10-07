@@ -1,0 +1,7 @@
+{
+  "package": "lxgw-wenkai-screen-webfont",
+  "version": "1.7.0",
+  "font": "LXGW WenKai Screen",
+  "upstream": "https://github.com/lxgw/LxgwWenKai-Screen",
+  "packaging": "https://github.com/chawyehsu/lxgw-wenkai-webfont"
+}

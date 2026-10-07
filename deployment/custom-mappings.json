@@ -1,0 +1,38 @@
+{
+  "android": {
+    "com.ahaspeed.store": {
+      "name": "啊哈加速器",
+      "statusText": "正在用啊哈加速器调整网络喵~"
+    },
+    "com.linkedin.android": {
+      "name": "领英",
+      "statusText": "正在看领英动态喵~"
+    },
+    "com.microsoft.office.outlook": {
+      "name": "Outlook",
+      "statusText": "正在用Outlook处理邮件和日程喵~"
+    },
+    "com.sec.android.app.launcher": {
+      "name": "三星桌面",
+      "statusText": "停留在手机桌面喵~"
+    },
+    "com.wujie.osconnect": {
+      "name": "无界趣连",
+      "statusText": "正在用无界趣连远程操作喵~"
+    },
+    "net.afdian.afdian": {
+      "name": "爱发电",
+      "statusText": "正在爱发电看创作者动态喵~"
+    }
+  },
+  "windows": {
+    "SlayTheSpire2.exe": {
+      "name": "杀戮尖塔2",
+      "statusText": "正在杀戮尖塔2里爬塔喵~"
+    },
+    "WeChatAppEx.exe": {
+      "name": "微信内置页面",
+      "statusText": "正在浏览微信里的页面喵~"
+    }
+  }
+}

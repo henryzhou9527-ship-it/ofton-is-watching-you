@@ -1,0 +1,91 @@
+:root {
+  --font-soft-copy: 'LXGW WenKai Screen', 'Microsoft YaHei UI', 'PingFang SC', sans-serif;
+  --soft-copy-size: 1rem;
+  --soft-meta-size: .9375rem;
+  --soft-axis-size: .875rem;
+  --soft-ink: oklch(39% .045 277);
+  --soft-muted: oklch(47% .04 277);
+}
+
+/* Only the smaller copy changes; display titles and large chart numbers keep their type. */
+.next-shell :is(.live-state-top, .live-meta, .music-line, .device-identity, .device-state, .device-power, .date-control, .device-filters, .view-tabs, .day-summary > div > span, .ribbon-device, .day-axis, .hour-readout, .hour-label, .hour-footer, .pie-detail-name, .pie-detail-caption, .pie-detail-duration, .pie-legend-item, .pie-expand, .pie-clear, .replay-time, .replay-story, .replay-duration, .filter-note, .idle-toggle, .more-sessions, .quiet-empty, .connection-notice, .effects-toggle) {
+  font-family: var(--font-soft-copy);
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: .01em;
+}
+.next-shell :is(.live-state-top, .live-meta, .music-line, .device-identity > span, .device-state, .device-power) { font-size: var(--soft-meta-size); line-height: 1.7; }
+.next-shell .live-state-top { column-gap: .75rem; row-gap: .375rem; flex-wrap: wrap; }
+.next-shell .live-meta { gap: .5rem 1.25rem; }
+.next-shell .live-meta > span { color: oklch(78% .025 277); }
+.next-shell .device-identity strong { font-size: 1.0625rem; font-weight: 400; }
+.next-shell .device-identity > span { color: oklch(77% .028 277); }
+.next-shell .device-state { color: oklch(76% .028 277); }
+.next-shell .device-state.online { color: var(--n-green); }
+.next-shell .device-power { color: oklch(77% .028 277); }
+.next-shell .device-row { gap: .875rem; }
+.next-shell :is(.date-control input, .date-control button, .device-filters button, .view-tabs button) { font-family: var(--font-soft-copy); font-size: 1rem; }
+.next-shell .date-field input { width: 151px; font-variant-numeric: tabular-nums; }
+.next-shell :is(.device-filters button, .date-control button) { min-height: 2.5rem; }
+.next-shell .view-tabs button { min-height: 2.25rem; }
+.next-shell .day-summary > div > span { font-size: 1rem; line-height: 1.7; color: var(--soft-muted); }
+.next-shell .day-summary { row-gap: 1.75rem; }
+.next-shell .day-axis { font-size: var(--soft-axis-size); color: var(--soft-muted); font-variant-numeric: tabular-nums; }
+.next-shell .ribbon-device { font-size: .875rem; color: var(--soft-ink); }
+.next-shell :is(.hour-readout, .pie-detail-name, .pie-detail .pie-detail-caption) { font-size: 1.0625rem; font-weight: 400; line-height: 1.8; }
+.next-shell .hour-readout { color: var(--soft-ink); }
+.next-shell .hour-readout strong { font-weight: 400; }
+.next-shell :is(.hour-label, .hour-footer) { font-size: var(--soft-axis-size); color: var(--soft-muted); }
+.next-shell .hour-chart { margin-bottom: .625rem; }
+.next-shell .hour-label { bottom: -4px; }
+.next-shell .pie-detail .pie-detail-caption { color: var(--soft-ink); }
+.next-shell .pie-detail-duration { font-size: 1rem; color: var(--soft-muted); line-height: 1.8; }
+.next-shell .pie-detail-name { gap: .625rem; }
+.next-shell .pie-legend-item > span { font-size: 1rem; }
+.next-shell .pie-legend-item small { font-size: .875rem; color: var(--soft-muted); }
+.next-shell .pie-legend-item { min-height: 3rem; }
+.next-shell :is(.pie-expand, .pie-clear, .more-sessions, .filter-note .text-button) { font-size: .9375rem !important; }
+.next-shell .replay-story p { font-family: var(--font-soft-copy); font-size: 1.125rem; font-weight: 400; line-height: 1.85; }
+.next-shell .replay-meta { font-size: var(--soft-meta-size); line-height: 1.7; color: var(--soft-muted); row-gap: .375rem; }
+.next-shell .replay-time > span { font-size: 1rem; line-height: 1.7; font-weight: 400; color: var(--soft-ink); }
+.next-shell .replay-time > small { font-family: var(--font-soft-copy); font-size: .875rem; line-height: 1.75; color: var(--soft-muted); }
+.next-shell .replay-duration { font-size: 1rem; line-height: 1.8; color: var(--soft-ink); }
+.next-shell .replay-entry { grid-template-columns: 10rem minmax(0,1fr) 12.5rem; gap: 1.5rem; padding-block: 1.5rem; }
+.next-shell .replay-dot { margin-top: .75rem; }
+.next-shell :is(.idle-toggle, .filter-note, .connection-notice, .quiet-empty p) { font-size: .9375rem; color: var(--soft-muted); }
+.next-shell .effects-toggle { font-size: .9375rem !important; min-height: 2.5rem; }
+.effects-off :is(.egg-star, .egg-fish):hover { transform: none; }
+
+@media (max-width: 1050px) {
+  .next-shell .replay-entry { grid-template-columns: 9.5rem minmax(0,1fr) 10rem; gap: 1.125rem; }
+}
+@media (max-width: 760px) {
+  .next-shell .replay-entry { grid-template-columns: 8rem minmax(0,1fr); gap: .625rem 1rem; }
+  .next-shell .replay-duration { grid-column: 2; }
+}
+@media (max-width: 660px) {
+  :root { --soft-meta-size: .875rem; --soft-axis-size: .875rem; }
+  .next-shell :is(.live-state-top, .live-meta, .device-identity > span, .device-state, .device-power) { font-size: .875rem; }
+  .next-shell .device-identity strong { font-size: 1rem; }
+  .next-shell .device-row { gap: .625rem; }
+  .next-shell :is(.date-control input, .date-control button, .device-filters button, .view-tabs button) { font-size: .9375rem; }
+  .next-shell .device-filters { gap: .1875rem; }
+  .next-shell .device-filters button { padding-inline: .625rem; }
+  .next-shell .day-summary > div > span { font-size: .9375rem; }
+  .next-shell .pie-detail .pie-detail-caption { font-size: 1.0625rem !important; }
+  .next-shell .pie-detail-duration, .next-shell .pie-detail-name { font-size: 1rem; }
+  .next-shell .pie-legend-item > span { font-size: .9375rem; }
+  .next-shell .pie-legend-item small { font-size: .875rem; }
+  .next-shell .hour-readout { font-size: 1rem; }
+  .next-shell .replay-entry { grid-template-columns: 7rem minmax(0,1fr); column-gap: .75rem; }
+  .next-shell .replay-story p { font-size: 1.0625rem; line-height: 1.8; }
+  .next-shell .replay-time > span { font-size: .9375rem; }
+  .next-shell .replay-time > small { font-size: .875rem; }
+  .next-shell .replay-meta { font-size: .875rem; }
+  .next-shell .replay-duration { font-size: .9375rem; }
+  .next-shell .idle-toggle { font-size: .875rem; }
+}
+@media (max-width: 380px) {
+  .next-shell .replay-entry { grid-template-columns: 6.375rem minmax(0,1fr); column-gap: .5625rem; }
+  .next-shell .device-filters button { padding-inline: .5rem; }
+}

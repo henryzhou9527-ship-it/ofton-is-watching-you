@@ -1,0 +1,19 @@
+{
+  "extends": "@lark-apaas/fullstack-presets/lib/simple/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "preserveWatchOutput": true,
+    "paths": {
+      "@server/*": ["server/*"],
+      "@shared/*": ["shared/*"],
+    }
+  },
+  "watchOptions": {
+    "excludeDirectories": ["node_modules/**"]
+  },
+  "include": ["server/**/*", "server/**/*.json", "shared/**/*.ts", "deployment/**/*.json"],
+  // MCP UI 是独立浏览器工程，不使用服务端的 TypeScript 配置。
+  "exclude": ["server/mcp/ui", "node_modules", "dist", "client", "source_package", "**/*.test.ts", "**/*.spec.ts", "**/*.e2e-spec.ts"],
+}

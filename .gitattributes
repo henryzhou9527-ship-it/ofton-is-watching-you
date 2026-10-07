@@ -1,0 +1,8 @@
+# Local bindings, private environment files and source-only reference art.
+.spark/ export-ignore
+.env.local export-ignore
+.env.*.local export-ignore
+design/reference-sheets/ export-ignore
+*.sh text eol=lf
+companions/android/gradlew text eol=lf
+.githooks/pre-commit text eol=lf

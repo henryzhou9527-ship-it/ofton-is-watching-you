@@ -1,0 +1,52 @@
+.egg-announcement { position: fixed; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; pointer-events: none; }
+.juan-overlay { position: fixed; inset: 0; overflow: hidden; contain: layout paint; z-index: 80; pointer-events: none; }
+.juan-guest { position: absolute; width: var(--guest-size); height: var(--guest-size); pointer-events: none; user-select: none; opacity: 1; transform: none; transition: transform 280ms cubic-bezier(.16,1,.3,1), opacity 160ms ease-out; }
+.juan-guest[data-phase='entering'], .juan-guest[data-phase='leaving'] { opacity: 0; }
+.juan-sprite { width: 100%; height: 100%; background-size: 500% 200%; background-repeat: no-repeat; filter: drop-shadow(0 5px 5px oklch(25% .035 275 / .13)); }
+.juan-whisper { position: absolute; right: 4%; top: -1.25rem; padding: .3rem .65rem; border-radius: .75rem .75rem .1rem .75rem; background: oklch(97% .025 275); border: 1px solid oklch(83% .045 275); color: oklch(31% .055 275); font: 400 1rem/1.5 'LXGW WenKai Screen', 'Microsoft YaHei', sans-serif; white-space: nowrap; box-shadow: 0 3px 12px oklch(24% .03 275 / .08); transition: opacity 120ms ease-out; }
+.juan-guest:not([data-phase='holding']) .juan-whisper { opacity: 0; }
+.juan-left .juan-whisper { left: 40%; right: auto; }
+.juan-right .juan-whisper, .juan-shh .juan-whisper { right: 23%; }
+.juan-twinkle { position: absolute; top: 14%; right: -2%; color: oklch(68% .15 336); font-size: 1.75rem; }
+.juan-ledge:is([data-phase='entering'],[data-phase='leaving']) { transform: translateY(90%); }
+.juan-left:is([data-phase='entering'],[data-phase='leaving']) { transform: translateX(-95%) rotate(-10deg); }
+.juan-right:is([data-phase='entering'],[data-phase='leaving']) { transform: translateX(95%) rotate(10deg); }
+.juan-spy:is([data-phase='entering'],[data-phase='leaving']) { transform: translate(-18px,12px) scale(.85); }
+.juan-blanket:is([data-phase='entering'],[data-phase='leaving']) { transform: translateX(65%) rotate(18deg); }
+.juan-fish:is([data-phase='entering'],[data-phase='leaving']) { transform: translateY(80%) scale(.94); }
+.juan-wave:is([data-phase='entering'],[data-phase='leaving']) { transform: translateY(14px) scale(.85); }
+.juan-hat:is([data-phase='entering'],[data-phase='leaving']) { transform: translateY(40%) rotate(6deg); }
+.juan-caught:is([data-phase='entering'],[data-phase='leaving']) { transform: translate(20px,14px) scale(.88); }
+.juan-shh:is([data-phase='entering'],[data-phase='leaving']) { transform: translateX(75%) rotate(8deg); }
+.juan-guest[data-phase='holding'] .juan-sprite { animation-duration: 1800ms; animation-timing-function: ease-in-out; animation-fill-mode: both; }
+.juan-ledge[data-phase='holding'] .juan-sprite { animation-name: juan-look-up; }
+.juan-left[data-phase='holding'] .juan-sprite { animation-name: juan-left-look; }
+.juan-right[data-phase='holding'] .juan-sprite { animation-name: juan-right-look; }
+.juan-spy[data-phase='holding'] .juan-sprite { animation-name: juan-look-around; }
+.juan-blanket[data-phase='holding'] .juan-sprite { animation-name: juan-blanket-roll; }
+.juan-fish[data-phase='holding'] .juan-sprite { animation-name: juan-fish-sway; }
+.juan-wave[data-phase='holding'] .juan-sprite { animation-name: juan-wave-hello; }
+.juan-hat[data-phase='holding'] .juan-sprite { animation-name: juan-hide-hat; }
+.juan-caught[data-phase='holding'] .juan-sprite { animation-name: juan-startle; }
+.juan-shh[data-phase='holding'] .juan-sprite { animation-name: juan-shush; }
+@keyframes juan-look-up { 30% { transform: translateY(-4px); } 70% { transform: translateY(2px); } }
+@keyframes juan-left-look { 35%, 65% { transform: translateX(5px) rotate(4deg); } }
+@keyframes juan-right-look { 35%, 65% { transform: translateX(-5px) rotate(-4deg); } }
+@keyframes juan-look-around { 30% { transform: translate(3px,-2px) rotate(3deg); } 65% { transform: translateX(-3px) rotate(-3deg); } }
+@keyframes juan-blanket-roll { 30% { transform: rotate(-4deg); } 70% { transform: translateY(2px) rotate(3deg); } }
+@keyframes juan-fish-sway { 25% { transform: rotate(-4deg); } 55% { transform: rotate(3deg); } 80% { transform: rotate(-2deg); } }
+@keyframes juan-wave-hello { 20%, 65% { transform: rotate(-5deg); } 42%, 82% { transform: rotate(5deg); } }
+@keyframes juan-hide-hat { 40%, 70% { transform: translateY(7px) rotate(3deg); } }
+@keyframes juan-startle { 25% { transform: translateY(-6px) rotate(-3deg); } 55% { transform: translateY(1px); } }
+@keyframes juan-shush { 40%, 75% { transform: translateX(-4px) rotate(-6deg); } }
+.next-shell .wordmark-icon { background: var(--n-ink); color: var(--n-paper); padding: 0; cursor: pointer; }
+.next-shell .portrait-stamp { background: var(--n-yellow); color: var(--n-ink); cursor: pointer; }
+.next-shell .title-spark { background: none; color: var(--n-pink); padding: 0; cursor: pointer; }
+.next-shell .egg-star { padding: 5px; margin-left: .5rem; min-width: 2.5rem; min-height: 2.5rem; color: oklch(64% .14 337); font-size: 1.5rem; line-height: 1; vertical-align: middle; }
+.egg-replay-title { display: flex; align-items: center; gap: .6rem; }
+.next-shell .egg-fish { display: grid; place-items: center; min-width: 2.5rem; min-height: 2.5rem; color: oklch(59% .1 267); }
+.egg-star:hover, .egg-fish:hover { transform: rotate(-9deg); }
+.egg-star, .egg-fish { transition: transform 180ms var(--n-ease); }
+@media (prefers-reduced-motion: reduce) { .juan-guest, .juan-twinkle { animation: none !important; transform: none !important; }.egg-star, .egg-fish { transition: none !important; } }
+
+@media (prefers-reduced-motion: reduce) { .juan-guest { transition: none !important; }.juan-sprite { animation: none !important; } }
