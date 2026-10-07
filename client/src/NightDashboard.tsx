@@ -74,6 +74,7 @@ export default function NightDashboard() {
           const isConnected = !error && online(device, now); const power = device.extra?.battery_percent;
           return <button data-egg-trigger="chance" className={`device-row ${deviceId === device.device_id ? 'selected' : ''}`} key={device.device_id} onClick={() => setDeviceId(deviceId === device.device_id ? null : device.device_id)} type="button" aria-pressed={deviceId === device.device_id}><DeviceIcon platform={device.platform} /><span className="device-identity"><strong>{device.device_name}</strong><span>{error ? '连接中断' : isConnected ? device.status_text || (isIdle(device) ? '暂时离开了喵~' : `正在使用${device.app_name}喵~`) : `最后上报 ${since(device.last_seen_at, now)}`}</span></span>{typeof power === 'number' && <span className="device-power">{device.extra?.battery_charging ? <BatteryCharging size={16} /> : <Battery size={16} />}{power}%</span>}<span className={`device-state ${isConnected ? 'online' : ''}`}><i />{error ? '未知' : isConnected ? '在线' : '离线'}</span></button>;
         })}</div>
+        <p className="theme-credit">《Monitoring》视觉参考<span>© OTOIRO / DECO*27</span></p>
       </section>
 
       </div>

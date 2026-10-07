@@ -21,8 +21,8 @@ android {
         applicationId = "org.ofton.watching"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "2.3.1-ofton"
+        versionCode = 8
+        versionName = "2.3.3-ofton"
     }
 
     signingConfigs {

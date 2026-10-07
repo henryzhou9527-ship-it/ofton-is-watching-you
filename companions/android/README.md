@@ -4,7 +4,7 @@
 
 ## 安装
 
-到仓库的 [Releases](https://github.com/henryzhou9527-ship-it/ofton-is-watching-you/releases) 下载 `ofton-android-v2.3.1-dev.apk`。需要 Android 8.0 或更新版本。
+到仓库的 [Releases](https://github.com/henryzhou9527-ship-it/ofton-is-watching-you/releases) 下载 `ofton-android-v2.3.3-dev.apk`。需要 Android 8.0 或更新版本。
 
 当前下载包是开发签名版本，已通过编译与签名校验，尚未完成完整的真机兼容性测试。安装后的应用名称为 `Live Dashboard`，包名是 `org.ofton.watching`，可与上游 App 同时安装；同一设备只开启一个采集端。
 

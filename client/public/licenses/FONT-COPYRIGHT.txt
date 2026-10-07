@@ -1,0 +1,8 @@
+Copyright 2021 LXGW (https://github.com/lxgw/LxgwWenKai)
+
+Copyright 2020 The Klee Project Authors (https://github.com/fontworks-fonts/Klee)
+
+Font: LXGW WenKai Screen
+Font license: SIL Open Font License 1.1 (LXGW-WenKai.txt)
+Source: https://github.com/lxgw/LxgwWenKai-Screen
+Webfont packaging: https://github.com/chawyehsu/lxgw-wenkai-webfont (MIT)

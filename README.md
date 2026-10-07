@@ -61,7 +61,7 @@ npm run build:preview
 
 ## 源码与素材
 
-代码采用 [MIT](LICENSE) 许可，保留 [上游许可](LICENSE-original-dashboard)。字体和主题美术的说明见 [素材与致谢](ASSETS.md)，设计约定见 [DESIGN.md](DESIGN.md)。
+代码采用 [MIT](LICENSE) 许可，保留 [上游许可](LICENSE-original-dashboard)。主题图片不在代码的 MIT 授权范围内，不能当作可任意再分发或商用的素材。图片、字体、图标的来源与许可说明见 [素材与致谢](ASSETS.md)，其中也列出了尚需权利人确认的图片使用范围。设计约定见 [DESIGN.md](DESIGN.md)。
 
 这些说明只存在于项目文档中，网页不展示部署教程或源码入口。
 
