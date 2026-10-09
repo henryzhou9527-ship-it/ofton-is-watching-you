@@ -20,6 +20,8 @@ Android 源码来自上游 `android-source` 分支，具体版本及改动见 [U
 
 Android 原始图标来自上述上游代码仓库；App 附带的第三方软件许可见 [Android notices](companions/android/app/src/main/assets/licenses/THIRD-PARTY-NOTICES.txt)。本项目绘制的简单眼睛 SVG 图标随代码许可。
 
+Windows 采集代码来自同一上游的 `windows-source` 分支，许可见 [Windows LICENSE](companions/windows/LICENSE)。独立客户端内保留 Python、PyInstaller 及 requests、psutil、pystray、Pillow 等依赖的许可文件，位于安装包的 `OftonClient/licenses/`。PyInstaller 启动器遵循其许可及分发例外；依赖不会被本项目重新许可为 MIT。
+
 ## 主题美术
 
 角色主题为 [お布団巻き](https://space.bilibili.com/19206492)，画面构图参考 DECO*27 的 [《Monitoring》官方 PV](https://www.youtube.com/watch?v=kbNdx0yqbZE)。本项目是非官方同人主题，不代表角色、创作者或音乐作品的官方产品。

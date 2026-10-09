@@ -1,4 +1,38 @@
-# 桌面播放信息适配
+# Windows 配套客户端
+
+Windows 客户端包含独立 Python 运行环境，不依赖终端、编辑器或外部 Python 安装。
+
+## 安装和日常使用
+
+从 [Releases](https://github.com/henryzhou9527-ship-it/ofton-is-watching-you/releases) 下载 Windows 压缩包，完整解压后运行：
+
+```powershell
+powershell -NoProfile -File .\Install.ps1
+```
+
+安装程序只为当前账号创建计划任务，使用普通用户权限，不保存 Windows 登录密码。服务器地址和设备 Token 由自己填写，后端需要已为该设备启用 `activity_reporting` 授权。已有配置可以通过 `-ConfigPath` 参数导入；配置文件不会打进安装包。
+
+通常安装在 `%LOCALAPPDATA%\OftonWatching`。如果安装程序运行在会虚拟化 AppData 的 MSIX 应用里，会自动改用 `%USERPROFILE%\Documents\OftonWatching`，避免计划任务看不到文件。也可通过 `-InstallDirectory` 指定独立目录。安装最后会实际通过 Windows 计划任务启动一次，检查启动结果。
+
+- 登录当前账号后自动启动；每分钟检查一次守护进程是否需要重启。
+- 采集进程意外退出后自动重启，采集循环约两分钟没有响应时重启。
+- 网络失败持续重试，最长重试间隔为 30 秒；只有服务端明确确认后才记录成功时间。
+- 笔记本切换到电池供电不会被计划任务停止，也没有默认三天运行时限。
+- 睡眠期间不唤醒电脑；恢复后继续采集。关机、睡眠或断网期间不会编造在线状态。
+
+在安装目录双击 `Start.cmd`、`Stop.cmd`、`Status.cmd`，或使用开始菜单的对应入口。**手动停止会一直保持停止，包括重新登录之后；恢复时再点启动。** 托盘里的「停止上报并退出」也是同样行为。
+
+本机配置、最近成功上报时间和滚动日志保存在安装目录的 `data` 文件夹，限制当前账号与 SYSTEM 访问。诊断记录不保存设备 Token、文档名或窗口原文。
+
+卸载自动启动入口时运行 `Uninstall.ps1`。使用自定义目录安装的，卸载也传入相同的 `-InstallDirectory`。卸载保留配置和旧程序备份。
+
+## 从源码构建
+
+使用 Windows 和 Python 3.12，安装 `requirements-build.txt` 后运行 `build.ps1`。构建先运行自动恢复测试，再生成独立客户端和安装脚本。不要把自己的 `data`、`config.json`、日志或安装任务 XML 提交到仓库。
+
+采集代码基于 [Monika-Dream/live-dashboard 的 windows-source 分支](https://github.com/Monika-Dream/live-dashboard/tree/windows-source)，原 MIT 许可保留在 [LICENSE](LICENSE)。本版本增加独立进程守护、持久停止状态、循环健康检查和本地标题过滤。
+
+## 播放信息适配
 
 上游 Windows / macOS / Linux 客户端上报的 `extra.music` 仍然兼容。后端也可以从已知音乐、视频软件以及带明确站点后缀的浏览器标题中提取播放内容，其他窗口标题不显示。
 
