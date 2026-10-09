@@ -160,7 +160,6 @@ html, body { overscroll-behavior-y: none; }
   .scene-shell .day-axis span:nth-child(even) { display: none; }
 }
 @media (max-width: 660px) and (max-height: 740px) {
-  .scene-shell .has-playback .portrait-scene { display: none; }
   .scene-shell .day-summary > div:not(:first-child) { display: none; }
 }
 @media (max-height: 600px) and (min-width: 661px) {
