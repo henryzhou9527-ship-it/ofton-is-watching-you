@@ -7,5 +7,6 @@ import './fonts/wenkai/style.css';
 import './small-type.css';
 import './juan-eggs.css';
 import './scenes.css';
+import './categories.css';
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><Dashboard /></React.StrictMode>);

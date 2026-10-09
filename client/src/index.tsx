@@ -12,6 +12,7 @@ import './fonts/wenkai/style.css';
 import './small-type.css';
 import './juan-eggs.css';
 import './scenes.css';
+import './categories.css';
 
 const CLIENT_BASE_PATH = (window as unknown as { __platform__?: { basename?: string } }).__platform__?.basename || '/';
 

@@ -1,6 +1,6 @@
 {
   "name": "ofton-is-watching-you",
-  "version": "2.3.5",
+  "version": "2.4.0",
   "private": true,
   "flags": {
     "supportBusinessUser": true,
@@ -29,7 +29,7 @@
     "dev:local": "node ./scripts/dev-local.js",
     "dev:preview": "node node_modules/vite/bin/vite.js --config vite.preview.config.ts",
     "build:preview": "node node_modules/vite/bin/vite.js build --config vite.preview.config.ts",
-    "test": "node --test scripts/activity-view.test.cjs scripts/replay-groups.test.cjs scripts/page-gesture.test.cjs scripts/site-nickname.test.cjs scripts/now-playing.test.cjs"
+    "test": "node --test scripts/activity-view.test.cjs scripts/replay-groups.test.cjs scripts/page-gesture.test.cjs scripts/site-nickname.test.cjs scripts/now-playing.test.cjs scripts/app-categories.test.cjs"
   },
   "dependencies": {
     "@lark-apaas/fullstack-nestjs-core": "^1.1.64",

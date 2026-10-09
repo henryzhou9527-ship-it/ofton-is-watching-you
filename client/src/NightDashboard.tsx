@@ -13,6 +13,8 @@ import { useSceneNavigation } from '@/hooks/useSceneNavigation';
 import { usePageGestures } from '@/hooks/usePageGestures';
 import NowPlaying from '@/components/NowPlaying';
 import { getNowPlaying } from '@/lib/now-playing';
+import { classifyApp, currentMood } from '@/lib/app-categories';
+import { ActivityMood, CategoryBadge } from '@/components/ActivityCategory';
 
 function since(time: string | undefined, now: number) {
   if (!time || !Number.isFinite(Date.parse(time))) return '尚无上报';
@@ -69,10 +71,11 @@ export default function NightDashboard() {
         <div className="hero-content"><div className="hero-copy"><h1 id="hero-title" className="watching-title" aria-label={SITE_NAME}>お布団巻き<button type="button" className="title-spark" data-egg-trigger="direct" aria-label="戳一下小星星">✳</button><span className="title-japanese">is watching you<span className="title-small-eye"><Eye size={32} /></span></span></h1>
           <div className={`live-state ${connected ? 'is-live' : ''}`}><div className="live-state-top"><span>{nickname}</span></div><p className="live-status" aria-live="polite">{status}</p><div className="live-meta"><span><Radio size={13} />{connected && active ? active.app_name === 'idle' ? '设备在线' : active.app_name : `最后上报 ${since(active?.last_seen_at, now)}`}</span>{current && <span><Eye size={13} />{viewerCount} 人在看</span>}</div></div>
           </div><NightPortrait effects={effects} /></div>
+        <ActivityMood mood={currentMood(active, connected, !!current, !!error)} />
         <NowPlaying items={playing} />
         <div className="device-rail" aria-label="设备状态">{devices.length === 0 ? <p className="device-empty">{loading ? '设备连接中' : '还没有设备上报'}</p> : devices.map(device => {
           const isConnected = !error && online(device, now); const power = device.extra?.battery_percent;
-          return <button data-egg-trigger="chance" className={`device-row ${deviceId === device.device_id ? 'selected' : ''}`} key={device.device_id} onClick={() => setDeviceId(deviceId === device.device_id ? null : device.device_id)} type="button" aria-pressed={deviceId === device.device_id}><DeviceIcon platform={device.platform} /><span className="device-identity"><strong>{device.device_name}</strong><span>{error ? '连接中断' : isConnected ? device.status_text || (isIdle(device) ? '暂时离开了喵~' : `正在使用${device.app_name}喵~`) : `最后上报 ${since(device.last_seen_at, now)}`}</span></span>{typeof power === 'number' && <span className="device-power">{device.extra?.battery_charging ? <BatteryCharging size={16} /> : <Battery size={16} />}{power}%</span>}<span className={`device-state ${isConnected ? 'online' : ''}`}><i />{error ? '未知' : isConnected ? '在线' : '离线'}</span></button>;
+          return <button data-egg-trigger="chance" className={`device-row ${deviceId === device.device_id ? 'selected' : ''}`} key={device.device_id} onClick={() => setDeviceId(deviceId === device.device_id ? null : device.device_id)} type="button" aria-pressed={deviceId === device.device_id}><DeviceIcon platform={device.platform} /><span className="device-identity"><strong>{device.device_name}{isConnected && !isIdle(device) && <CategoryBadge category={classifyApp(device)} />}</strong><span>{error ? '连接中断' : isConnected ? device.status_text || (isIdle(device) ? '暂时离开了喵~' : `正在使用${device.app_name}喵~`) : `最后上报 ${since(device.last_seen_at, now)}`}</span></span>{typeof power === 'number' && <span className="device-power">{device.extra?.battery_charging ? <BatteryCharging size={16} /> : <Battery size={16} />}{power}%</span>}<span className={`device-state ${isConnected ? 'online' : ''}`}><i />{error ? '未知' : isConnected ? '在线' : '离线'}</span></button>;
         })}</div>
         <p className="theme-credit">《Monitoring》视觉参考<span>© OTOIRO / DECO*27</span></p>
       </section>
