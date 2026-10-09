@@ -28,7 +28,7 @@ export const ActivityMood = memo(function ActivityMood({ mood }: { mood: MoodId 
 
 export default function CategoryBreakdown({ sessions, onSelect }: { sessions: readonly Session[]; onSelect: (category: CategoryId) => void }) {
   const usage = useMemo(() => buildCategoryUsage(sessions), [sessions]);
-  return <section className="category-breakdown" aria-label="活动分类统计"><div className="category-heading"><h3>时间花在哪</h3><span title="同时使用不同类别时，重合时段由这些类别平分；同类设备不重复计算。分类之和等于合计时长。">重合只算一次</span></div>
+  return <section className="category-breakdown" aria-label="活动分类统计"><div className="category-heading"><h3>时间花在哪</h3></div>
     {!usage.total ? <p className="category-empty">还没开始，先占个位。</p> : <>
       <div className="category-meter" aria-hidden="true">{usage.ranked.map(item => <span key={item.id} style={{ flexGrow: item.seconds, background: item.color }} />)}</div>
       <div className="category-legend">{usage.ranked.map(item => <button type="button" key={item.id} onClick={() => onSelect(item.id)} aria-label={`查看${item.label}记录，${preciseDuration(item.seconds)}`} title={preciseDuration(item.seconds)}><CategoryBadge category={item.id} /><span>{item.percent}%</span></button>)}</div>

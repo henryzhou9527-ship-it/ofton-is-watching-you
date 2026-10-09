@@ -12,7 +12,6 @@
 .category-breakdown { flex-shrink: 0; padding: 2px 0 18px; font-family: var(--font-soft-copy); }
 .category-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 12px; }
 .category-heading h3 { font: 600 1.125rem/1.5 var(--font-soft-copy); }
-.category-heading > span { font-size: .875rem; color: var(--n-muted); }
 .category-meter { display: flex; height: 16px; gap: 3px; border-radius: 6px; overflow: hidden; }
 .category-meter > span { min-width: 2px; flex-basis: 0; }
 .category-legend { display: flex; flex-wrap: wrap; gap: 4px 20px; padding-top: 6px; }
@@ -43,7 +42,6 @@
   .category-breakdown { padding-bottom: 12px; }
   .category-heading { margin-bottom: 7px; }
   .category-heading h3 { font-size: 1rem; }
-  .category-heading > span { font-size: .8125rem; }
   .category-legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 7px; }
   .category-legend button { min-height: 40px; gap: 4px; padding-inline: 0; margin: 0; font-size: .8125rem; }
   .category-legend .category-badge { font-size: .8125rem; gap: 4px; }
