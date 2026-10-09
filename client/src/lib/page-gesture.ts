@@ -28,3 +28,45 @@ export function createPageGesture() {
     },
   };
 }
+
+interface TouchScrollOrigin { previous: boolean; next: boolean }
+
+/** Observe a finger gesture without taking native scrolling or pinch zoom away. */
+export function createTouchPageGesture() {
+  let start: { x: number; y: number; scroll: TouchScrollOrigin; mode: 'pending' | 'page' | 'native' | 'blocked' } | null = null;
+  let lockedUntil = -Infinity;
+  const move = (x: number, y: number): PageGestureResult => {
+    if (!start || !Number.isFinite(x) || !Number.isFinite(y)) return 'native';
+    if (start.mode === 'native') return 'native';
+    if (start.mode === 'blocked' || start.mode === 'page') return 'hold';
+    const dx = x - start.x;
+    const dy = start.y - y;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) < 8) return 'native';
+    if (Math.abs(dx) > Math.abs(dy) * 1.25) {
+      start.mode = 'native'; return 'native';
+    }
+    if (Math.abs(dy) <= Math.abs(dx) * 1.25) return 'native';
+    if (start.scroll[dy > 0 ? 'next' : 'previous']) { start.mode = 'native'; return 'native'; }
+    start.mode = 'page'; return 'hold';
+  };
+  return {
+    begin(x: number, y: number, at: number, scroll: TouchScrollOrigin) {
+      start = Number.isFinite(x) && Number.isFinite(y) ? { x, y, scroll, mode: at < lockedUntil ? 'blocked' : 'pending' } : null;
+    },
+    move,
+    end(x: number, y: number, at: number): PageGestureResult {
+      move(x, y);
+      const origin = start;
+      start = null;
+      if (!origin || origin.mode !== 'page' || !Number.isFinite(x) || !Number.isFinite(y)) return 'native';
+      const dx = x - origin.x;
+      const dy = origin.y - y;
+      if (Math.abs(dy) < 56 || Math.abs(dy) <= Math.abs(dx) * 1.25) return 'native';
+      // A reversal may end in the direction where native content can still scroll.
+      if (origin.scroll[dy > 0 ? 'next' : 'previous']) return 'native';
+      lockedUntil = at + 360;
+      return dy > 0 ? 'next' : 'previous';
+    },
+    cancel() { start = null; },
+  };
+}
