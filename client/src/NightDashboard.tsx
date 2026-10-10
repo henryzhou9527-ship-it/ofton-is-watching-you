@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Battery, BatteryCharging, ChartPie, Eye, EyeOff, Radio, Sparkles } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Battery, BatteryCharging, ChartPie, Eye, Radio, Sparkles, Users, Wand } from 'lucide-react';
 import { useDashboard } from '@/hooks/useDashboard';
 import { ConfigContext, useConfigLoader } from '@/hooks/useConfig';
 import { isIdle, localDate } from '@/lib/activity-view';
 import type { DeviceState } from '@/lib/api';
 import { SITE_NAME, SITE_SETTINGS } from '@/site';
+import CoverEntrance from '@/components/CoverEntrance';
 import NightPortrait from '@/components/NightPortrait';
 import JuanEasterEggs from '@/components/JuanEasterEggs';
 import { DeviceIcon } from '@/components/ActivityViews';
@@ -31,9 +32,23 @@ export default function NightDashboard() {
   const { current, timeline, selectedDate, changeDate, loading, error, viewerCount } = useDashboard();
   const [now, setNow] = useState(Date.now());
   const [deviceId, setDeviceId] = useState<string | null>(null);
-  const [effects, setEffects] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [effects, setEffects] = useState(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    try { return localStorage.getItem('ofton:effects') !== 'off'; } catch { return true; }
+  });
+  const [entering, setEntering] = useState(() => effects && !['#today', '#replay'].includes(window.location.hash));
+  const portraitTarget = useRef<HTMLButtonElement>(null);
+  const finishEntrance = useCallback(() => {
+    const focusInside = !!document.activeElement?.closest('.cover-entrance');
+    setEntering(false);
+    if (focusInside) requestAnimationFrame(() => document.getElementById('scene-tab-now')?.focus({ preventScroll: true }));
+  }, []);
   const { scene, destination, phase, navigate } = useSceneNavigation(effects);
-  const gestureRoot = usePageGestures(destination, navigate);
+  useEffect(() => { if (scene !== 'now') finishEntrance(); }, [scene, finishEntrance]);
+  useEffect(() => {
+    try { localStorage.setItem('ofton:effects', effects ? 'on' : 'off'); } catch { /* Storage can be unavailable in private browsing. */ }
+  }, [effects]);
+  const gestureRoot = usePageGestures(destination, navigate, !entering);
   const today = localDate(new Date(now));
   const date = selectedDate || today;
   useEffect(() => { const timer = setInterval(() => setNow(Date.now()), 10000); return () => clearInterval(timer); }, []);
@@ -49,10 +64,9 @@ export default function NightDashboard() {
   const idle = active && isIdle(active);
   const status = error ? '信号暂时断了' : !current ? '正在接收信号' : connected ? (active?.status_text || (idle ? '暂时离开了喵~' : `正在使用${active?.app_name}喵~`)) : `${nickname} 暂时不在线喵~`;
 
-  return <ConfigContext.Provider value={displayConfig}><div ref={gestureRoot} className={`next-shell scene-shell ${effects ? 'effects-on' : 'effects-off'}`}>
-    <a href="#today" className="skip-link" onClick={event => { event.preventDefault(); navigate('today', true); }}>跳到统计</a>
-    <header className="next-header">
-      <div className="wordmark" aria-label={`${SITE_NAME} 首页`}><button type="button" className="wordmark-icon" data-egg-trigger="direct" aria-label="和小卷打个招呼"><Eye size={21} /></button><strong>お布団巻き</strong></div>
+  return <ConfigContext.Provider value={displayConfig}><div ref={gestureRoot} className={`next-shell scene-shell ${effects ? 'effects-on' : 'effects-off'} ${entering ? 'is-entering' : ''}`}>
+    <a href="#today" className="skip-link" inert={entering} onClick={event => { event.preventDefault(); navigate('today', true); }}>跳到统计</a>
+    <header className="next-header" inert={entering}>
       <nav className="scene-tabs" role="tablist" aria-label="切换画面" data-scene={destination} onKeyDown={event => {
         if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
         event.preventDefault();
@@ -62,15 +76,15 @@ export default function NightDashboard() {
         <button type="button" id="scene-tab-now" role="tab" aria-label="此刻" title="此刻" aria-selected={destination === 'now'} aria-controls="scene-now" tabIndex={destination === 'now' ? 0 : -1} onClick={() => navigate('now')}><Eye size={20} aria-hidden="true" /></button>
         <button type="button" id="scene-tab-today" role="tab" aria-label="今天" title="今天" aria-selected={destination === 'today'} aria-controls="scene-today" tabIndex={destination === 'today' ? 0 : -1} onClick={() => navigate('today')}><ChartPie size={20} aria-hidden="true" /></button>
       </nav>
-      <div className="header-end"><button className="effects-toggle" aria-label={effects ? '关闭特效' : '开启特效'} onClick={() => setEffects(!effects)} aria-pressed={effects} title={effects ? '关闭特效' : '开启特效'} type="button">{effects ? <Sparkles size={19} aria-hidden="true" /> : <EyeOff size={19} aria-hidden="true" />}</button></div>
+      <div className="header-end"><button className="effects-toggle" aria-label={effects ? '关闭特效' : '开启特效'} onClick={() => setEffects(!effects)} aria-pressed={effects} title={effects ? '关闭特效' : '开启特效'} type="button">{effects ? <Sparkles size={19} aria-hidden="true" /> : <Wand size={19} aria-hidden="true" />}</button></div>
     </header>
-    <main className="scene-deck" data-phase={phase}>
+    <main className="scene-deck" data-phase={phase} inert={entering}>
       <div id="scene-now" className="scene-panel now-scene" role="tabpanel" aria-labelledby="scene-tab-now" tabIndex={-1} data-active={scene === 'now'} aria-hidden={scene !== 'now'} inert={scene !== 'now'}>
       <section className={`night-hero ${playing.length ? 'has-playback' : ''}`} id="now" aria-labelledby="hero-title">
         <div className="hero-grid" aria-hidden="true" /><div className="hero-glow" aria-hidden="true" />
-        <div className="hero-content"><div className="hero-copy"><h1 id="hero-title" className="watching-title" aria-label={SITE_NAME}>お布団巻き<button type="button" className="title-spark" data-egg-trigger="direct" aria-label="戳一下小星星">✳</button><span className="title-japanese">is watching you<span className="title-small-eye"><Eye size={32} /></span></span></h1>
-          <div className={`live-state ${connected ? 'is-live' : ''}`}><div className="live-state-top"><span>{nickname}</span></div><p className="live-status" aria-live="polite">{status}</p><div className="live-meta"><span><Radio size={13} />{connected && active ? active.app_name === 'idle' ? '设备在线' : active.app_name : `最后上报 ${since(active?.last_seen_at, now)}`}</span>{current && <span><Eye size={13} />{viewerCount} 人在看</span>}</div></div>
-          </div><NightPortrait effects={effects} /></div>
+        <div className="hero-content"><div className="hero-copy"><h1 id="hero-title" className="watching-title" aria-label={SITE_NAME}>お布団巻き<button type="button" className="title-spark" data-egg-trigger="direct" aria-label="戳一下小星星">✳</button><span className="title-japanese">is watching you</span></h1>
+          <div className={`live-state ${connected ? 'is-live' : ''}`}><div className="live-state-top"><span>{nickname}</span></div><p className="live-status" aria-live="polite">{status}</p><div className="live-meta"><span><Radio size={13} />{connected && active ? active.app_name === 'idle' ? '设备在线' : active.app_name : `最后上报 ${since(active?.last_seen_at, now)}`}</span>{current && <span><Users size={13} />{viewerCount} 人在看</span>}</div></div>
+          </div><NightPortrait effects={effects && !entering} target={portraitTarget} /></div>
         <ActivityMood mood={currentMood(active, connected, !!current, !!error)} />
         <NowPlaying items={playing} />
         <div className="device-rail" aria-label="设备状态">{devices.length === 0 ? <p className="device-empty">{loading ? '设备连接中' : '还没有设备上报'}</p> : devices.map(device => {
@@ -86,6 +100,7 @@ export default function NightDashboard() {
       </div>
       <div className="scene-shutter" aria-hidden="true" />
     </main>
-    <JuanEasterEggs enabled={effects && phase === 'idle'} />
+    <JuanEasterEggs enabled={effects && !entering && phase === 'idle'} />
+    {entering && <CoverEntrance ready={!!current || !!error} effects={effects} target={portraitTarget} onDone={finishEntrance} />}
   </div></ConfigContext.Provider>;
 }

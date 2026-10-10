@@ -8,5 +8,6 @@ import './small-type.css';
 import './juan-eggs.css';
 import './scenes.css';
 import './categories.css';
+import './entrance.css';
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><Dashboard /></React.StrictMode>);

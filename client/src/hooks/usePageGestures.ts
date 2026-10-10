@@ -14,14 +14,14 @@ function canScroll(target: Element, root: HTMLElement, direction: number) {
   return false;
 }
 
-export function usePageGestures(scene: Scene, navigate: (scene: Scene) => void) {
+export function usePageGestures(scene: Scene, navigate: (scene: Scene) => void, enabled = true) {
   const root = useRef<HTMLDivElement>(null);
   const gesture = useRef(createPageGesture());
   const touchGesture = useRef(createTouchPageGesture());
   const suppressedClick = useRef<{ target: Element; until: number } | null>(null);
   useEffect(() => {
     const element = root.current;
-    if (!element) return;
+    if (!element || !enabled) return;
     const guarded = (event: WheelEvent | KeyboardEvent | TouchEvent) => event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
       !(event.target instanceof Element) || !!event.target.closest('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="slider"]');
     let touchId: number | null = null;
@@ -105,6 +105,6 @@ export function usePageGestures(scene: Scene, navigate: (scene: Scene) => void) 
       element.removeEventListener('touchend', touchEnd); element.removeEventListener('touchcancel', cancelTouch);
       element.removeEventListener('click', click, true);
     };
-  }, [scene, navigate]);
+  }, [scene, navigate, enabled]);
   return root;
 }

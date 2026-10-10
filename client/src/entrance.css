@@ -1,0 +1,93 @@
+/* One large illustration, one continuous move into its resting place. */
+.cover-entrance { position: fixed; inset: 0; z-index: 100; overflow: hidden; isolation: isolate; color: var(--n-ink); }
+.entrance-backdrop { position: absolute; inset: 0; background: oklch(94% .032 286); }
+.entrance-backdrop::after { content: ''; position: absolute; width: 140%; height: 32%; left: -20%; top: 36%; background: oklch(84% .135 350); transform: rotate(-12deg); }
+.entrance-art { position: absolute; width: min(112dvh, 104vw); aspect-ratio: 1; left: calc(50% - min(56dvh, 52vw)); top: calc(50% - min(56dvh, 52vw)); border-radius: 50%; overflow: hidden; transform-origin: center; opacity: 0; will-change: transform; }
+.entrance-art img { width: 100%; height: 100%; object-fit: cover; transform: rotate(-7deg) scale(1.06); }
+.entrance-art.art-ready { opacity: 1; }
+.cover-entrance:not(.is-closing) .entrance-art.art-ready { animation: cover-appear 620ms cubic-bezier(.16,1,.3,1) both; }
+@keyframes cover-appear { from { opacity: 0; transform: scale(.82) rotate(5deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+.entrance-type { position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: difference; }
+.entrance-type strong { position: absolute; left: 4vw; top: 5dvh; font-family: 'Yu Gothic', 'Meiryo', sans-serif; font-weight: 900; font-size: clamp(3rem, 7.5vw, 8rem); letter-spacing: -.07em; line-height: 1; color: var(--n-paper); transform: rotate(-5deg); }
+.entrance-type > span { position: absolute; right: 4vw; bottom: 16dvh; font: italic 500 clamp(2rem, 5vw, 5rem)/1 Georgia, serif; letter-spacing: -.04em; color: var(--n-paper); transform: rotate(-5deg); }
+.entrance-bottom { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); inset-inline: 4vw; display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 400 1rem/1.5 var(--font-soft-copy); }
+.entrance-connection { display: flex; align-items: center; gap: 8px; }
+.entrance-connection i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.entrance-bottom button { display: flex; align-items: center; gap: 24px; border: 1px solid oklch(23% .035 277 / .3); border-radius: 30px; padding: 10px 18px; min-height: 44px; }
+.entrance-bottom button:hover { background: oklch(89% .04 286); }
+.entrance-bottom button:focus-visible { outline: 3px solid oklch(50% .18 280); outline-offset: 4px; }
+.is-closing .entrance-backdrop { animation: entrance-away 700ms 120ms ease both; }
+.is-closing .entrance-type, .is-closing .entrance-bottom { animation: entrance-away 230ms ease both; }
+@keyframes entrance-away { to { opacity: 0; } }
+.is-entering .portrait-lens { opacity: 0; }
+
+/* The cover spans the live information and the smaller reaction together. */
+.scene-shell .night-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); grid-template-rows: minmax(0, 1fr) auto auto auto auto; column-gap: 38px; row-gap: 0; padding-top: 20px; overflow-x: clip; }
+.scene-shell .hero-content { display: contents; }
+.scene-shell .hero-copy { grid-column: 1; grid-row: 1; align-self: center; min-width: 0; }
+.scene-shell .activity-mood { grid-column: 1; grid-row: 2; display: flex; padding: 0 0 14px; min-height: 0; gap: 12px; }
+.scene-shell .mood-sticker { width: 96px; height: 96px; }
+.scene-shell .mood-caption { display: block; padding: 0; }
+.scene-shell .mood-caption p { font-size: 1.125rem; line-height: 1.6; }
+.scene-shell .night-hero .portrait-scene, .scene-shell .night-hero.has-playback .portrait-scene { grid-column: 2; grid-row: 1 / 3; width: 100%; height: auto; max-width: min(590px, calc(100dvh - 245px)); max-height: none; margin: auto; }
+.scene-shell .night-hero.has-playback .portrait-scene { max-width: min(590px, calc(100dvh - 360px)); }
+.scene-shell .portrait-lens { inset: 2%; transform: none; box-shadow: 0 0 0 1px oklch(70% .09 280 / .35), 0 24px 60px oklch(12% .04 280 / .3); }
+.scene-shell .portrait-lens img { transform: rotate(-7deg) scale(1.06) translate(var(--look-x), var(--look-y)); }
+.scene-shell .is-peeking .portrait-lens img { transform: rotate(-7deg) scale(1.13) translate(var(--look-x), var(--look-y)); }
+.scene-shell .orbit { opacity: .32; }
+.scene-shell .star-one { right: 0; top: 3%; font-size: 3.5rem; }
+.scene-shell .star-two { left: -2%; bottom: 4%; }
+.scene-shell .star-three { display: none; }
+.scene-shell .now-playing { grid-column: 1 / -1; grid-row: 3; max-height: 100px; }
+.scene-shell .device-rail { grid-column: 1 / -1; grid-row: 4; margin-top: 8px; }
+.scene-shell .theme-credit { grid-column: 1 / -1; grid-row: 5; }
+.scene-shell .scene-tabs { grid-column: 2; }
+.scene-shell .header-end { grid-column: 3; }
+.scene-shell .next-header { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+
+@media (max-width: 660px) {
+  .entrance-art { width: min(148vw, 88dvh); left: calc(50% - min(74vw, 44dvh)); top: calc(49% - min(74vw, 44dvh)); }
+  .entrance-type strong { top: 9dvh; left: 5vw; font-size: 3.125rem; }
+  .entrance-type > span { bottom: 18dvh; right: 6vw; font-size: 2.25rem; }
+  .entrance-bottom { inset-inline: 24px; }
+  .scene-shell .next-header { height: 60px; min-height: 60px; }
+  .scene-shell .night-hero { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(156px, 1fr) auto auto auto auto auto; padding: 12px 20px 0; row-gap: 4px; column-gap: 0; }
+  .scene-shell .hero-copy { display: contents; }
+  .scene-shell .hero-copy h1.watching-title { grid-column: 1; grid-row: 1; font-size: 2.625rem; letter-spacing: -2px; line-height: 1.1; z-index: 2; }
+  .scene-shell .watching-title .title-japanese { font-size: 1.5rem; margin-top: 2px; line-height: 1.2; }
+  .scene-shell .watching-title .title-spark { font-size: 1.5rem; right: -30px; top: 0; }
+  .scene-shell .night-hero .portrait-scene, .scene-shell .night-hero.has-playback .portrait-scene { grid-column: 1; grid-row: 2; height: 100%; width: auto; max-width: 100%; max-height: 430px; min-height: 0; margin: 0; place-self: center; }
+  .scene-shell .hero-copy .live-state { grid-column: 1; grid-row: 3; align-self: auto; width: 100%; max-width: none; margin: 0; padding: 5px 0 0; border-top: 0; }
+  .scene-shell .live-state-top { font-size: .9375rem; }
+  .scene-shell .hero-copy .live-status { font-size: 1.125rem; line-height: 1.45; margin-top: 2px !important; }
+  .scene-shell .live-meta { margin-top: 3px; font-size: .8125rem; line-height: 1.4; }
+  .scene-shell .activity-mood { grid-column: 1; grid-row: 4; display: flex; gap: 10px; padding: 3px 0; }
+  .scene-shell .mood-sticker { position: static; width: 64px; height: 64px; }
+  .scene-shell .mood-label { font-size: .8125rem; line-height: 1.3; }
+  .scene-shell .mood-caption { max-width: none; }
+  .scene-shell .mood-caption p { font-size: 1rem; line-height: 1.4; margin: 2px 0 0; }
+  .scene-shell .now-playing { grid-column: 1; grid-row: 5; min-height: 58px; max-height: 76px; padding-block: 5px; }
+  .scene-shell .device-rail { grid-column: 1; grid-row: 6; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; margin-top: 0; }
+  .scene-shell .device-row { display: grid; grid-template-columns: 17px minmax(0, 1fr); gap: 1px 6px; align-content: center; min-height: 52px; padding: 5px 0 !important; }
+  .scene-shell .device-row + .device-row { border: 0 !important; }
+  .scene-shell .device-row > svg { width: 17px; grid-row: 1; grid-column: 1; }
+  .scene-shell .device-identity { grid-column: 2; grid-row: 1; }
+  .scene-shell .device-identity strong { flex-wrap: nowrap; font-size: .875rem; }
+  .scene-shell .device-identity > span { display: none; }
+  .scene-shell .device-identity .category-badge { display: none; }
+  .scene-shell .device-power { display: none; }
+  .scene-shell .device-state { grid-column: 2; grid-row: 2; justify-self: start; font-size: .8125rem; line-height: 1.4; }
+  .scene-shell .theme-credit { grid-column: 1; grid-row: 7; font-size: .625rem; padding-bottom: 4px; }
+  .scene-shell .star-one { font-size: 2.75rem; }
+  .scene-shell .star-two { font-size: 1.75rem; }
+}
+@media (max-width: 660px) and (max-height: 740px) {
+  .scene-shell .night-hero { padding-top: 8px; row-gap: 2px; }
+  .scene-shell .hero-copy h1.watching-title { font-size: 2.25rem; }
+  .scene-shell .watching-title .title-japanese { font-size: 1.25rem; }
+  .scene-shell .mood-sticker { width: 52px; height: 52px; }
+  .scene-shell .hero-copy .live-status { font-size: 1rem; }
+  .scene-shell .mood-caption p { font-size: .9375rem; }
+}
+@media (max-height: 580px) { .scene-shell .now-scene { overflow-y: auto; }.scene-shell .night-hero { min-height: 500px; } }
+@media (prefers-reduced-motion: reduce) { .cover-entrance { display: none; } }

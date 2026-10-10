@@ -10,9 +10,9 @@ export function CategoryBadge({ category }: { category: CategoryId }) {
   return <span className="category-badge" style={{ '--category-color': meta.color } as CSSProperties}><Icon size={13} aria-hidden="true" />{meta.label}</span>;
 }
 const QUIET = {
-  idle: { state: '暂时离开', quote: '人呢？刚刚还在这里的。', icon: Moon },
-  offline: { state: '离线', quote: '没逮到人，等会儿再来。', icon: WifiOff },
-  loading: { state: '连接中', quote: '让我探个头。', icon: Radio },
+  idle: { state: '暂时离开', quote: '人呢？刚刚还在这里的', icon: Moon },
+  offline: { state: '离线', quote: '没逮到人，等会儿再来', icon: WifiOff },
+  loading: { state: '连接中', quote: '让我探个头', icon: Radio },
   error: { state: '信号中断', quote: '信号呢？我的信号呢？', icon: Radio },
 };
 
@@ -29,7 +29,7 @@ export const ActivityMood = memo(function ActivityMood({ mood }: { mood: MoodId 
 export default function CategoryBreakdown({ sessions, onSelect }: { sessions: readonly Session[]; onSelect: (category: CategoryId) => void }) {
   const usage = useMemo(() => buildCategoryUsage(sessions), [sessions]);
   return <section className="category-breakdown" aria-label="活动分类统计"><div className="category-heading"><h3>时间花在哪</h3></div>
-    {!usage.total ? <p className="category-empty">还没开始，先占个位。</p> : <>
+    {!usage.total ? <p className="category-empty">还没开始，先占个位</p> : <>
       <div className="category-meter" aria-hidden="true">{usage.ranked.map(item => <span key={item.id} style={{ flexGrow: item.seconds, background: item.color }} />)}</div>
       <div className="category-legend">{usage.ranked.map(item => <button type="button" key={item.id} onClick={() => onSelect(item.id)} aria-label={`查看${item.label}记录，${preciseDuration(item.seconds)}`} title={preciseDuration(item.seconds)}><CategoryBadge category={item.id} /><span>{item.percent}%</span></button>)}</div>
     </>}

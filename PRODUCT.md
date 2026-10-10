@@ -41,6 +41,8 @@ Generic SaaS cards; bland anime wallpaper behind a dashboard; explanatory text u
 
 13. Avoid a long scrolling website. Use full-height current/today scenes with a blink transition, separate statistics/detail panels, and fitted replay pagination. Preserve reading size, existing art, filters, deduplicated calculations, browser navigation and reduced-motion support.
 
+14. Use a brief, skippable, cover-led entrance to carry the initial load. Preserve the real loading/error state, put a hard bound on waiting, and never replay the entrance when changing scenes.
+
 ## Accessibility & Inclusion
 
 Readable Chinese labels, keyboard-accessible controls, descriptive chart values, non-color status labels, mobile layout, reduced-motion support and an explicit effects toggle. No automatic audio. These are implementation defaults for this preview.

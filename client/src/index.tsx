@@ -13,6 +13,7 @@ import './small-type.css';
 import './juan-eggs.css';
 import './scenes.css';
 import './categories.css';
+import './entrance.css';
 
 const CLIENT_BASE_PATH = (window as unknown as { __platform__?: { basename?: string } }).__platform__?.basename || '/';
 

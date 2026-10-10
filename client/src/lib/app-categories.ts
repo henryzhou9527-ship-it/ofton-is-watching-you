@@ -3,14 +3,14 @@ import { isIdle, type Session } from './activity-view';
 import type { DeviceState } from './api';
 
 export const CATEGORIES = [
-  { id: 'work', label: '工作', state: '工作中', color: 'oklch(78% .12 50)', quote: '妹妹，我不是闲人，我也要工作。', sprite: 'juan-mood-work.png', alt: '小卷气鼓鼓地敲电脑，旁边冒着小火苗' },
-  { id: 'game', label: '游戏', state: '游戏中', color: 'oklch(77% .13 294)', quote: '这把打完就下。真的。', sprite: 'juan-mood-game.png', alt: '小卷握紧游戏手柄，满脸写着这把要赢' },
-  { id: 'entertainment', label: '娱乐', state: '娱乐中', color: 'oklch(80% .12 346)', quote: '再看一个，刚才那个不算。', sprite: 'juan-mood-entertainment.png', alt: '小卷抱着爆米花看视频，笑得很开心' },
+  { id: 'work', label: '工作', state: '工作中', color: 'oklch(78% .12 50)', quote: '妹妹，我不是闲人，我也要工作', sprite: 'juan-mood-work.png', alt: '小卷气鼓鼓地敲电脑，旁边冒着小火苗' },
+  { id: 'game', label: '游戏', state: '游戏中', color: 'oklch(77% .13 294)', quote: '这把打完就下，真的', sprite: 'juan-mood-game.png', alt: '小卷握紧游戏手柄，满脸写着这把要赢' },
+  { id: 'entertainment', label: '娱乐', state: '娱乐中', color: 'oklch(80% .12 346)', quote: '再看一个，刚才那个不算', sprite: 'juan-mood-entertainment.png', alt: '小卷抱着爆米花看视频，笑得很开心' },
   { id: 'study', label: '学习', state: '学习中', color: 'oklch(83% .10 173)', quote: '知识，快进我脑子里来！', sprite: 'juan-mood-study.png', alt: '小卷趴在书前认真记笔记，旁边堆着书' },
-  { id: 'browse', label: '浏览', state: '浏览中', color: 'oklch(83% .10 240)', quote: '我就查个东西，怎么开了这么多页。', sprite: 'juan-mood-browse.png', alt: '小卷拿着放大镜，从电脑后面好奇地探头' },
-  { id: 'social', label: '聊天', state: '聊天中', color: 'oklch(86% .12 100)', quote: '等一下，群里有瓜。', sprite: 'juan-mood-social.png', alt: '小卷拿着手机捂嘴偷笑，旁边冒出聊天气泡' },
-  { id: 'tools', label: '工具', state: '折腾中', color: 'oklch(79% .05 260)', quote: '等我把这个调好，马上。', sprite: 'juan-mood-tools.png', alt: '小卷拿着扳手和小齿轮，睁着蓝眼睛认真琢磨' },
-  { id: 'other', label: '其他', state: '闲逛中', color: 'oklch(82% .035 290)', quote: '让我看看，又点开了什么。', sprite: 'juan-mood-other.png', alt: '小卷睁着蓝眼睛，歪头摊手发懵' },
+  { id: 'browse', label: '浏览', state: '浏览中', color: 'oklch(83% .10 240)', quote: '我就查个东西，怎么开了这么多页', sprite: 'juan-mood-browse.png', alt: '小卷拿着放大镜，从电脑后面好奇地探头' },
+  { id: 'social', label: '聊天', state: '聊天中', color: 'oklch(86% .12 100)', quote: '等一下，群里有瓜', sprite: 'juan-mood-social.png', alt: '小卷拿着手机捂嘴偷笑，旁边冒出聊天气泡' },
+  { id: 'tools', label: '工具', state: '折腾中', color: 'oklch(79% .05 260)', quote: '等我把这个调好，马上', sprite: 'juan-mood-tools.png', alt: '小卷拿着扳手和小齿轮，睁着蓝眼睛认真琢磨' },
+  { id: 'other', label: '其他', state: '闲逛中', color: 'oklch(82% .035 290)', quote: '让我看看，又点开了什么', sprite: 'juan-mood-other.png', alt: '小卷睁着蓝眼睛，歪头摊手发懵' },
 ] as const;
 export type CategoryId = typeof CATEGORIES[number]['id'];
 export const categoryMeta = (id: CategoryId) => CATEGORIES.find(item => item.id === id)!;
