@@ -56,7 +56,7 @@
   .scene-shell .hero-copy h1.watching-title { grid-column: 1; grid-row: 1; font-size: 2.625rem; letter-spacing: -2px; line-height: 1.1; z-index: 2; }
   .scene-shell .watching-title .title-japanese { font-size: 1.5rem; margin-top: 2px; line-height: 1.2; }
   .scene-shell .watching-title .title-spark { font-size: 1.5rem; right: -30px; top: 0; }
-  .scene-shell .night-hero .portrait-scene, .scene-shell .night-hero.has-playback .portrait-scene { grid-column: 1; grid-row: 2; height: 100%; width: auto; max-width: 100%; max-height: 430px; min-height: 0; margin: 0; place-self: center; }
+  .scene-shell .night-hero .portrait-scene, .scene-shell .night-hero.has-playback .portrait-scene { grid-column: 1; grid-row: 2; height: 100%; width: auto; max-width: 100%; max-height: min(430px, calc(100vw - 60px)); min-height: 0; margin: 0; place-self: center; }
   .scene-shell .hero-copy .live-state { grid-column: 1; grid-row: 3; align-self: auto; width: 100%; max-width: none; margin: 0; padding: 5px 0 0; border-top: 0; }
   .scene-shell .live-state-top { font-size: .9375rem; }
   .scene-shell .hero-copy .live-status { font-size: 1.125rem; line-height: 1.45; margin-top: 2px !important; }
